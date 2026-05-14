@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>四丿季的点滴</title>
+  <meta name="description" content="记录生活片段与思考" />
+  <meta name="author" content="四丿季" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+  </head>
+
+<body>
+  <div id="canvas-loader" class="basement-loader">
+    <canvas id="loader-canvas"></canvas>
+    <div class="loader-text" style="position: absolute; bottom: 10%; z-index: 2;">
+      LOADING <span>00</span>%
+    </div>
+  </div>
+
+  <div class="layout-container">
+
+    <main class="main-content">
+      <section class="content-section">
+        <h3 class="section-title">最新随笔</h3>
+        <div id="notes-container" class="notes-container">
+          <p class="loading-text">正在加载随笔...</p>
+        </div>
+      </section>
+    </main>
+
+    <aside class="side-column">
+      <div class="side-inner">
+
+        <header class="header">
+          <h1 class="site-title">四丿季的点滴</h1>
+          <h2 class="site-subtitle">PONDERING</h2>
+          <p class="subtitle-description">
+            一些生活片段、工作记录与缓慢的思考。
+          </p>
+        </header>
+
+        <div class="virtue-text">
+          爱国守法，明礼诚信，团结友善
+        </div>
+
+        <div class="site-intro">
+          <p>
+            这是一个节奏并不急促的网站。<br />
+            它不追逐热点，也不强调更新频率，<br />
+            只是在合适的时候，留下当下的记忆。
+          </p>
+        </div>
+
+        <footer class="footer">
+          <div class="footer-content">
+            
+            <p class="footer-links">
+              <a href="#">RSS</a>
+              <span aria-hidden="true">·</span>
+              <a href="mailto:bd8bij@outlook.com">Email</a>
+            </p>
+
+            <p class="footer-copy">
+              © 2026 四丿季保留所有权利
+            </p>
+
+            <div class="footer-records">
+              <span class="footer-record police-record">
+                <a href="https://beian.mps.gov.cn/#/query/webSearch?code=51082402000246" target="_blank" rel="noreferrer noopener">
+                  <img src="备案图标.png" alt="公安备案图标" />
+                  川公网安备51082402000246号
+                </a>
+              </span>
+
+              <span class="footer-record">
+                <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">
+                  蜀ICP备2026001225号-1
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </footer>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

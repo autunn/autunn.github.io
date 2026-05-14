@@ -1,0 +1,438 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   1. Reset & Globals (全局重置与基础变量)
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #fdfdfb; 
+  color: #2c3e50; 
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* 优化段落排版：避免孤字 */
+p, .note-title, .note-rest {
+  text-wrap: pretty;
+}
+
+/* 自定义选中文本高亮 */
+::selection {
+  background-color: #e8d5b5;
+  color: #1a1a1a;
+}
+
+/* 自定义浏览器滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   2. Animations (全局动画定义)
+   ========================================================================== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes breathing {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* ==========================================================================
+   3. WebGL Loader (3D 画布遮罩层)
+   ========================================================================== */
+.basement-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: opacity;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#loader-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.basement-loader .loader-text {
+  position: absolute;
+  bottom: 10%;
+  z-index: 2;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.2em;
+}
+
+/* ==========================================================================
+   4. Layout Framework (核心布局框架)
+   ========================================================================== */
+.layout-container {
+  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 900px;
+  width: 90%;
+  padding: 40px 20px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.side-column {
+  display: flex;
+}
+
+.side-inner {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 6rem;
+  text-align: right;
+}
+
+/* ==========================================================================
+   5. Components (各个独立组件样式)
+   ========================================================================== */
+
+/* --- 5.1 侧边栏 (Sidebar) --- */
+.site-title {
+  font-size: 2.2rem;
+  margin: 0 0 0.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: 1px;
+}
+
+.site-subtitle {
+  font-size: 1.1rem;
+  letter-spacing: 0.4em;
+  color: #8a9ba8;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.subtitle-description {
+  font-size: 0.95rem;
+  color: #6c7a89;
+  line-height: 1.6;
+}
+
+.virtue-text {
+  margin: 2.5rem 0;
+  font-size: 0.95rem;
+  font-family: "Georgia", "Times New Roman", serif;
+  color: #b08d57;
+  font-style: italic;
+  letter-spacing: 1px;
+  padding-right: 1rem;
+  border-right: 3px solid #e8d5b5;
+}
+
+.site-intro {
+  font-size: 0.9rem;
+  color: #5c6b77;
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+/* --- 5.2 主内容区与随笔列表 (Notes) --- */
+.section-title {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+  padding-left: 0.2rem;
+}
+
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -6px;
+  bottom: 4px;
+  height: 10px;
+  background-color: rgba(232, 213, 181, 0.6);
+  z-index: -1;
+  border-radius: 2px;
+  transform: skewX(-15deg);
+  transition: background-color 0.3s ease;
+}
+
+.loading-text {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  animation: breathing 2s infinite ease-in-out;
+  letter-spacing: 1px;
+  padding: 2rem 0;
+}
+
+.note-item {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.note-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+}
+
+.note-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  color: #222;
+  line-height: 1.5;
+}
+
+.note-rest {
+  font-weight: 400;
+  color: #555;
+  margin-left: 0.5rem;
+}
+
+.note-meta {
+  font-size: 0.85rem;
+  color: #999;
+  text-align: right;
+  border-top: 1px dashed #eee;
+  padding-top: 0.6rem;
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+}
+
+.note-meta::before {
+  content: "";
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23999999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' /%3E%3C/svg%3E");
+  background-size: cover;
+  opacity: 0.8;
+  position: relative;
+  top: -1px;
+}
+
+/* --- 5.3 页脚与备案 (Footer) --- */
+.footer {
+  font-size: 0.8rem;
+  color: #9aa5b1;
+  border-top: 1px solid #f0f4f8;
+  padding-top: 1.5rem;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #2c3e50;
+}
+
+.footer-links span {
+  opacity: 0.3;
+  padding: 0 0.4rem;
+}
+
+.footer-records {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+  flex-wrap: nowrap;
+  margin-top: 0.4rem;
+}
+
+.footer-record {
+  display: inline-flex;
+}
+
+.police-record a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.police-record img {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.police-record a:hover img {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   6. Responsive Layouts (响应式设备适配)
+   ========================================================================== */
+
+/* --- 6.1 桌面端宽屏布局 --- */
+@media (min-width: 1024px) {
+  .layout-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    column-gap: 8rem; 
+    max-width: 1200px; 
+    padding: 4rem 2rem;
+  }
+
+  .main-content {
+    max-width: 720px;
+  }
+
+  .side-column {
+    display: block;
+  }
+
+  .side-inner {
+    position: sticky;
+    top: 6rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* --- 6.2 移动端布局 --- */
+@media (max-width: 1023px) {
+  .layout-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .side-column, .side-inner {
+    display: contents; 
+  }
+  
+  .header { order: 1; text-align: left; margin-top: 1rem; }
+  
+  .virtue-text { 
+    order: 2; 
+    text-align: left; 
+    padding-right: 0; 
+    border-right: none; 
+    padding-left: 1rem; 
+    border-left: 3px solid #e8d5b5; 
+    margin: 1.5rem 0; 
+  }
+  
+  .site-intro { order: 3; text-align: left; margin-bottom: 2rem; }
+  .main-content { order: 4; }
+  .footer { order: 5; text-align: left; margin-top: 3rem; }
+  
+  .footer-records {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   7. Dark Mode (深色模式适配)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #000000;
+    color: #e0e0e0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                      linear-gradient(135deg, #1e1e1e 0%, #0a0a0a 100%);
+  }
+  
+  ::selection { background-color: #4a3e2a; color: #f5f5f5; }
+  ::-webkit-scrollbar-thumb { background-color: rgba(255, 255, 255, 0.15); }
+  ::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.3); }
+
+  .site-title { color: #e8e8e8; }
+  .site-subtitle { color: #788796; }
+  .subtitle-description, .site-intro { color: #8898aa; }
+  .virtue-text { color: #c4a977; border-right-color: #4a3e2a; border-left-color: #4a3e2a; }
+
+  .section-title { color: #e8e8e8; }
+  .section-title::before { background-color: rgba(74, 62, 42, 0.8); }
+  .loading-text { color: #666; }
+  
+  .note-item { 
+    background: rgba(30, 30, 30, 0.8); 
+    border-color: #2c2c2c; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  }
+  .note-item:hover { box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); }
+  .note-title { color: #f5f5f5; }
+  .note-rest { color: #999; }
+  
+  .note-meta { border-top-color: #333; color: #777; }
+  .note-meta::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23777777' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' /%3E%3C/svg%3E");
+  }
+
+  .footer { border-top-color: #2a2a2a; color: #6c7a89; }
+  .footer a:hover { color: #e8e8e8; }
+}
