@@ -88,9 +88,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   scene.fog = new THREE.FogExp2(isDarkMode ? 0x000000 : 0xfdfdfb, 0.06);
 
+  const cameraSettings = window.PONDERING_CAMERA || {
+    initialPosition: { x: 0.35, y: 1.35, z: 6.15 },
+    finalPosition: { x: 0.35, y: 1.18, z: 5.35 },
+    lookAt: { x: 0.3, y: -0.25, z: -3.6 },
+    loadingDrift: { x: 0, y: -0.03, z: -0.12 },
+    loadingBounds: { minZ: 5.35, maxZ: 6.15 },
+    settleSpeed: 0.045
+  };
+
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1, 5); 
-  camera.rotation.set(-0.15, -0.1, 0);
+  camera.position.set(
+    cameraSettings.initialPosition.x,
+    cameraSettings.initialPosition.y,
+    cameraSettings.initialPosition.z
+  );
+  camera.lookAt(
+    cameraSettings.lookAt.x,
+    cameraSettings.lookAt.y,
+    cameraSettings.lookAt.z
+  );
 
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -239,17 +256,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // C.2 核心渲染循环
   const animate = () => {
     animationId = requestAnimationFrame(animate);
-    
+
     if (!isLoaded) {
-      // 加载时的前推视角
-      camera.position.z -= 0.01; 
-      if (camera.position.z < -2) camera.position.z = 10;
+      // 加载时保持在最终构图附近，只做轻微前推，避免完成时换角度。
+      camera.position.x += cameraSettings.loadingDrift.x * 0.01;
+      camera.position.y += cameraSettings.loadingDrift.y * 0.01;
+      camera.position.z += cameraSettings.loadingDrift.z * 0.01;
+      if (camera.position.z < cameraSettings.loadingBounds.minZ) {
+        camera.position.set(
+          cameraSettings.initialPosition.x,
+          cameraSettings.initialPosition.y,
+          cameraSettings.initialPosition.z
+        );
+      }
     } else {
-      // 加载完成后的平滑归位 (这里的 2.5 是之前调高的相机高度)
-      camera.position.z += (2 - camera.position.z) * 0.03;
-      camera.position.y += (1 - camera.position.y) * 0.03;
+      // 加载完成后沿同一构图自然收束，和页面显现保持无缝。
+      camera.position.x += (cameraSettings.finalPosition.x - camera.position.x) * cameraSettings.settleSpeed;
+      camera.position.y += (cameraSettings.finalPosition.y - camera.position.y) * cameraSettings.settleSpeed;
+      camera.position.z += (cameraSettings.finalPosition.z - camera.position.z) * cameraSettings.settleSpeed;
     }
-    
+    camera.lookAt(
+      cameraSettings.lookAt.x,
+      cameraSettings.lookAt.y,
+      cameraSettings.lookAt.z
+    );
+
     // 跟随鼠标微动
     group.rotation.y += (mouseX * 0.3 - group.rotation.y) * 0.05;
     group.rotation.x += (mouseY * 0.3 - group.rotation.x) * 0.05;
@@ -282,9 +313,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ft) ft.style.opacity = '0';
         
         loaderDiv.style.transition = 'background-color 2.5s ease';
-        loaderDiv.style.backgroundColor = 'transparent'; 
-        loaderDiv.style.zIndex = '-1'; 
-        loaderDiv.style.pointerEvents = 'none'; 
+        loaderDiv.style.backgroundColor = 'transparent';
+        loaderDiv.style.pointerEvents = 'none';
+        setTimeout(() => {
+          loaderDiv.style.zIndex = '-1';
+        }, 2500);
       }, 400);
     }
     counterElement.textContent = count < 10 ? "0" + count : count;
