@@ -23,6 +23,6 @@
 
   document.getElementById("copy-group-link").addEventListener("click", async () => {
     try { await navigator.clipboard.writeText("https://qm.qq.com/q/5XZu4U8flY"); toast("入群链接已复制，可粘贴到 QQ 或浏览器打开"); }
-    catch (_) { toast("请长按交流区的群链接，选择复制链接"); }
+    catch (_) { toast("复制未成功，请点击“立即加入 QQ 群”打开群页面"); }
   });
 })();
