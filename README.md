@@ -42,3 +42,7 @@ python3 -m http.server 8000 --directory site
 官网仓库为 `autunn/autunn.github.io`，根地址为 <https://autunn.github.io/>。此前占用根地址的网站已停止发布，其源码及提交历史完整保留在 `autunn/autunn.github.io-archive-20261103`，原发布工作流已停用。
 
 原项目站路径 `/AutunnPlay-Website/` 和六个旧语言入口均跳转到根首页，并保留 URL 的查询参数与锚点。
+
+## 源码致谢
+
+本项目使用了 [DiPlay](https://github.com/shihabal3amri/DiPlay) 与 [xcertplay](https://github.com/shilapi/xcertplay) 的源码。官网底部保留原项目名称、链接及对原作者和贡献者的致谢。
