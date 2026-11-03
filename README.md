@@ -8,7 +8,7 @@ Autunn Play 的独立静态官网，使用 GitHub Pages 发布。
 - 适配车型：2023、2024、2025 款红旗 HS5。
 - QQ 群：Autunnplay交流群，<https://qm.qq.com/q/5XZu4U8flY>。
 
-官网展示普通 CarPlay 的连接、音乐、导航、导航分屏四类中控页面，以及车型适配和安装咨询。安装方式通过交流群了解。站点不提供安装包、车机固件或在线版本管理服务。
+官网展示普通 CarPlay 的连接、导航分屏、导航、音乐、应用五类中控页面，以及车型适配和安装咨询。安装方式通过交流群了解。安装包通过官网同源静态路径提供，可由 CDN 缓存，网站不提供车机固件或在线升级流程。
 
 将网页修改推送到 `main` 后会自动部署，也可以在 Actions 中手动运行部署工作流。仓库的 Settings → Pages → Source 使用 GitHub Actions。
 
@@ -22,6 +22,8 @@ python3 -m http.server 8000 --directory site
 
 ## 展示图片来源
 
+- `site/assets/carplay-apps.png`：Apple 官方普通 CarPlay 应用网格示例，638×384，保持原图；来源为 [iPhone 用户指南](https://support.apple.com/guide/iphone/ipha5936fe07/18.0/ios/18.0)，图注明确区别于本项目实机截图。
+
 - `site/assets/carplay-navigation.png`、`carplay-dashboard.png`：普通 CarPlay 的历史导航与导航分屏截图，使用内置 imagegen 仅对街道名、地点名及目的地等关键信息做局部模糊处理，保留道路、路线、箭头和布局；图注明确标识处理范围。
 - `site/assets/carplay-connected.png`：普通 CarPlay 连接后的音乐界面，来自 Android 手机台架的 ADB 整屏采集；不包含个人位置、联系人或消息内容。
 - `site/assets/carplay-wireless.png`、`carplay-usb.png`：由实际连接页生成的 Android 本地渲染预览，保留完整画面及原始来源标识。
@@ -33,9 +35,17 @@ python3 -m http.server 8000 --directory site
 
 地图图片的编辑提示摘要：仅对敏感地名文字的局部区域模糊，保留地图道路、路线、定位标记及中控 UI，禁止整幅地图模糊或添加 Ultra 元素。
 
-## 赞助与授权回馈
+## 赞赏码
 
-入口：<https://wzyp.cn/item/lwbqa1>。官网使用“独立开发赞助计划（含授权回馈）”说明支持形式，明确付款后会收到用于授权或功能解锁的密钥，不将该链接描述为完全无对价的纯捐赠。支持款不涉及软件所有权买断，不包含安装、调试、远程协助等技术服务；授权适用范围及交付说明需在付款前阅读链接页。
+页面使用用户提供的赞赏码原图 `site/assets/appreciation-code.jpg`，未重绘、裁切或改变码点；支持查看原图和下载。赞赏完全自愿，不影响软件的下载与使用。
+
+中控图集顺序为连接、导航分屏、导航、音乐、应用，默认展示连接页。页面顺序为产品介绍、五类中控界面、适配与安装包下载、使用帮助、交流区、赞赏码。QQ 入群入口仅位于交流区，顶栏、首屏、下载卡片和手机快捷栏不再重复展示。
+
+## 安装包
+
+CarPlay 1.0.1 / 10001，包名 `com.autunn.carplay`，大小 8,484,686 字节，最低 Android 9，APK v2 签名校验通过。安装包以现有正式交付文件原样存放在 `site/downloads/`，供官网同域名和 CDN 直接访问。
+
+下载：<https://autunn.github.io/downloads/CarPlay-1.0.1-HS5-release.apk>。SHA-256：`95f59353f559ab57ea929a1f15ddef7492d4c9962fa80bd93791e3ed43fca292`。
 
 ## 域名与旧站源码
 
