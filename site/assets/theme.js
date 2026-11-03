@@ -8,7 +8,7 @@
   function apply() {
     const dark = mode === "dark" || (mode === "system" && media.matches);
     document.documentElement.dataset.theme = dark ? "dark" : "light";
-    document.querySelector("meta[name=\"theme-color\"]").content = dark ? "#1A1A1D" : "#F1DDDF";
+    document.querySelector("meta[name=\"theme-color\"]").content = dark ? "#101113" : "#F5F7F5";
     const label = { system: "跟随系统", light: "浅色", dark: "深色" }[mode];
     const button = document.getElementById("theme-toggle");
     if (button) { document.getElementById("theme-label").textContent = label; button.setAttribute("aria-label", `外观：${label}，点击切换跟随系统、浅色或深色`); }

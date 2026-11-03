@@ -108,6 +108,15 @@
     toastTimer = setTimeout(() => { byId("toast").hidden = true; }, 3500);
   }
   document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => filter(button.dataset.filter)));
+  document.querySelectorAll("[data-preview]").forEach(button => button.addEventListener("click", () => {
+    const selected = button.dataset.preview;
+    document.querySelectorAll("[data-preview]").forEach(option => option.setAttribute("aria-pressed", String(option === button)));
+    document.querySelectorAll("[data-preview-panel]").forEach(panel => { panel.hidden = panel.dataset.previewPanel !== selected; });
+  }));
+  byId("copy-group-link").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText("https://qm.qq.com/q/5XZu4U8flY"); toast("入群链接已复制，可粘贴到 QQ 或浏览器打开"); }
+    catch (_) { toast("请长按交流区的群链接，选择复制链接"); }
+  });
   document.querySelectorAll("[data-filter-link]").forEach(link => link.addEventListener("click", () => filter(link.dataset.filterLink)));
   document.querySelectorAll("[data-open-details]").forEach(button => button.addEventListener("click", () => openDetails(button.dataset.openDetails)));
   document.querySelectorAll("[data-copy-hash]").forEach(button => button.addEventListener("click", async () => {
