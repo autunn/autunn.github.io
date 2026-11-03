@@ -151,4 +151,6 @@ h1 span{color:var(--accent-ink)}
 
 .showcase-tabs button:last-child{grid-column:1/-1}
 
-.image-source{text-decoration:underline;text-underline-offset:3px}
+.preview-pending{padding:48px 24px;text-align:center;background:var(--surface)}
+.preview-pending h3{font-size:20px}
+.preview-pending p{margin-top:12px;font-size:14px;color:var(--muted)}
