@@ -150,7 +150,3 @@ h1 span{color:var(--accent-ink)}
 @media(min-width:800px){.appreciation-card{grid-template-areas:"copy code" "actions code";grid-template-columns:minmax(0,1fr) minmax(240px,340px);column-gap:36px;align-items:center}}
 
 .showcase-tabs button:last-child{grid-column:1/-1}
-
-.preview-pending{padding:48px 24px;text-align:center;background:var(--surface)}
-.preview-pending h3{font-size:20px}
-.preview-pending p{margin-top:12px;font-size:14px;color:var(--muted)}
