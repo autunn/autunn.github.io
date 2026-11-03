@@ -6,7 +6,7 @@ Autunn Play 的独立静态官网，使用 GitHub Pages 发布。
 - 网页文件：`site/`
 - 部署配置：`.github/workflows/pages.yml`
 - 适配车型：2023、2024、2025 款红旗 HS5。
-- QQ 群：Autunnplay交流群，<https://qm.qq.com/q/5XZu4U8flY>。
+- QQ 群：AutunnPlay 红旗HS5，<https://qm.qq.com/q/Gr2eTNI2I4>。
 
 官网展示普通 CarPlay 的连接、导航分屏、导航、音乐与应用五类中控页面。另有车型适配和安装咨询，安装方式通过交流群了解。安装包通过官网同源静态路径提供，可由 CDN 缓存，网站不提供车机固件或在线升级流程。
 
