@@ -2,7 +2,7 @@
 
 Autunn Play 的独立静态官网，使用 GitHub Pages 发布。
 
-- 网站：<https://autunn.github.io/AutunnPlay-Website/>
+- 网站：<https://autunn.github.io/>
 - 网页文件：`site/`
 - 部署配置：`.github/workflows/pages.yml`
 - 适配车型：2023、2024、2025 款红旗 HS5。
@@ -36,3 +36,9 @@ python3 -m http.server 8000 --directory site
 ## 赞助与授权回馈
 
 入口：<https://wzyp.cn/item/lwbqa1>。官网使用“独立开发赞助计划（含授权回馈）”说明支持形式，明确付款后会收到用于授权或功能解锁的密钥，不将该链接描述为完全无对价的纯捐赠。支持款不涉及软件所有权买断，不包含安装、调试、远程协助等技术服务；授权适用范围及交付说明需在付款前阅读链接页。
+
+## 域名与旧站源码
+
+官网仓库为 `autunn/autunn.github.io`，根地址为 <https://autunn.github.io/>。此前占用根地址的网站已停止发布，其源码及提交历史完整保留在 `autunn/autunn.github.io-archive-20261103`，原发布工作流已停用。
+
+原项目站路径 `/AutunnPlay-Website/` 和六个旧语言入口均跳转到根首页，并保留 URL 的查询参数与锚点。
