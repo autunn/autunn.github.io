@@ -43,9 +43,9 @@ python3 -m http.server 8000 --directory site
 
 ## 安装包
 
-CarPlay 1.0.1 / 10001，包名 `com.autunn.carplay`，大小 8,484,686 字节，最低 Android 9，APK v2 签名校验通过。安装包以现有正式交付文件原样存放在 `site/downloads/`，供官网同域名和 CDN 直接访问。
+AutPlay 1.0.6 / 10006，包名 `com.autunn.carplay`，大小 8,409,054 字节，最低 Android 9，APK v2 签名校验通过。安装包以现有正式交付文件原样存放在 `site/downloads/`，供官网同域名和 CDN 直接访问。
 
-下载：<https://autunn.github.io/downloads/CarPlay-1.0.1-HS5-release.apk>。SHA-256：`95f59353f559ab57ea929a1f15ddef7492d4c9962fa80bd93791e3ed43fca292`。
+下载 <https://autunn.github.io/downloads/AutPlay-1.0.6-HS5-release.apk>。SHA-256 为 `ca9e75614905d4fe21ba0798179fc67c0c93c0b83bcbecf6717c46a9223f5a65`。
 
 ## 域名与旧站源码
 
